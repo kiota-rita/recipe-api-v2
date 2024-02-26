@@ -1,19 +1,14 @@
-env-exists:
-ifeq (,$(wildcard ./.env))
-	    cp .env.example .env
-endif
-
-build: env-exists
+build: 
 	docker-compose build
-start: env-exists
+start: 
 	docker-compose up
-bash: env-exists
+bash: 
 	docker-compose run web bash
-specs: env-exists
+specs: 
 	docker-compose run --rm -e "RAILS_ENV=test" web bundle exec rspec
-swagger: env-exists
+swagger: 
 	docker-compose run --rm -e "RAILS_ENV=test" web rake rswag:specs:swaggerize
-rubocop: env-exists
+rubocop: 
 	docker-compose run --rm -e "RAILS_ENV=test" web rubocop `git diff --name-only --cached | grep '\.rb'`
-routes: env-exists
+routes: 
 	docker-compose run --rm -e "RAILS_ENV=test" web rails routes
